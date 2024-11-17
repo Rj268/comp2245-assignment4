@@ -1,10 +1,12 @@
 document.getElementById('search-btn').addEventListener('click', () => {
+    const searchField = document.getElementById('search-field').value.trim();
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'superheroes.php', true);
+
+    xhr.open('GET', `superheroes.php?query=${encodeURIComponent(searchField)}`, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            alert(xhr.responseText); // Display the response as an alert
+            document.getElementById('result').innerHTML = xhr.responseText;
         } else {
             console.error('An error occurred');
         }
