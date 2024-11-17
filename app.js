@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.text();
             })
             .then((data) => {
-                alert(data);
+                const formattedData = `<ul>${data}</ul>`;
+                alert(formattedData);
             })
             .catch((error) => {
                 console.error("There was a problem with the fetch operation:", error);
