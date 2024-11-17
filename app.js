@@ -1,24 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const searchButton = document.getElementById("search-btn");
-    const searchField = document.getElementById("search-field");
-    const resultDiv = document.getElementById("result");
+document.getElementById('search-btn').addEventListener('click', () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'superheroes.php', true);
 
-    searchButton.addEventListener("click", () => {
-        const query = encodeURIComponent(searchField.value.trim());
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            alert(xhr.responseText); // Display the response as an alert
+        } else {
+            console.error('An error occurred');
+        }
+    };
 
-        fetch(`superheroes.php?query=${query}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            })
-            .then((data) => {
-                resultDiv.innerHTML = data;
-            })
-            .catch((error) => {
-                console.error("There was a problem with the fetch operation:", error);
-                resultDiv.innerHTML = "<p>There was an error processing your request.</p>";
-            });
-    });
+    xhr.onerror = function () {
+        console.error('Request failed');
+    };
+
+    xhr.send();
 });
