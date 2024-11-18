@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $superheroes = [
     [
         "id" => 1,
@@ -63,15 +66,21 @@ $superheroes = [
     ],
 ];
 
-$query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_STRING);
+$query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if ($query) {
+if ($query ==="") {
+    echo "<ul>";
+    foreach ($superheroes as $hero) {
+        echo "<li>{$hero['alias']} ({$hero['name']})</li>";
+    }
+    echo "</ul>";
+} else {
     $found = false;
-    foreach ($superheroes as $superhero) {
-        if (stripos($superhero['alias'], $query) !== false || stripos($superhero['name'], $query) !== false) {
-            echo "<h3>{$superhero['alias']}</h3>";
-            echo "<h4>{$superhero['name']}</h4>";
-            echo "<p>{$superhero['biography']}</p>";
+    foreach ($superheroes as $hero) {
+        if (strcasecmp($query, $hero['alias']) == 0 || strcasecmp($query, $hero['name']) == 0) {
+            echo "<h3>{$hero['alias']}</h3>";
+            echo "<h4>{$hero['name']}</h4>";
+            echo "<p>{$hero['bio']}</p>";
             $found = true;
             break;
         }
@@ -79,12 +88,6 @@ if ($query) {
     if (!$found) {
         echo "<p>Superhero not found</p>";
     }
-} else {
-    echo "<ul>";
-    foreach ($superheroes as $superhero) {
-        echo "<li>{$superhero['alias']} ({$superhero['name']})</li>";
-    }
-    echo "</ul>";
 }
 
 ?>
