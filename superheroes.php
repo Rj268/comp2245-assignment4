@@ -81,7 +81,7 @@ if ($query === "") {
         if (strcasecmp($query, $hero['alias']) == 0 || strcasecmp($query, $hero['name']) == 0) {
             echo "<h3>{$hero['alias']}</h3>";
             echo "<h4>{$hero['name']}</h4>";
-            echo "<p>{$hero['bio']}</p>";
+            echo "<p>{$hero['biography']}</p>";
             $found = true;
             break;
         }
