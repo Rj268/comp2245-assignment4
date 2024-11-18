@@ -67,11 +67,12 @@ $superheroes = [
 ];
 
 $query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_SPECIAL_CHARS);
+$query = isset($query) ? trim($query) : "";
 
-if ($query ==="") {
+if ($query === "") {
     echo "<ul>";
     foreach ($superheroes as $hero) {
-        echo "<li>{$hero['alias']} ({$hero['name']})</li>";
+        echo "<li>{$hero['alias']}</li>";
     }
     echo "</ul>";
 } else {
@@ -89,5 +90,7 @@ if ($query ==="") {
         echo "<p>Superhero not found</p>";
     }
 }
+?>
+
 
 ?>
